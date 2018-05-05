@@ -128,7 +128,7 @@ app.post("/api/create_reservation", async (req, res) => {
         // console.log(response); //For debug purposes
 
         // If POST is successful
-        if () {
+        if (f) {
 
         }
         // If calling endpoint was successful but errors were encountered...
