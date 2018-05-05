@@ -52,7 +52,6 @@ let reservations = [
   }
 ];
 
-// Basic route that sends the user first to the AJAX Page
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -85,12 +84,11 @@ app.get("/api/reservation/:table", (req, res) => {
 });
 
 app.post("/api/create_reservation", async (req, res) => {
-  let reservation = req.body;
-  const {body: {name, phonenumber, email, uniqueid}} = req;
+  let newreservation = req.body;
   newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
-  const update = await connection.push(newreservation);
-  console.log(update);
-  res.json(update);
+  console.log(newreservation);
+  reservations.push(newreservation);
+  res.json(newreservation);
 
 // =====================START POSTING TO CREATE RESERVATION ENDPOINT====================== //
 // On submit, check validation. If validation passes, get values and call create_reservation endpoint.
@@ -128,12 +126,12 @@ app.post("/api/create_reservation", async (req, res) => {
         // console.log(response); //For debug purposes
 
         // If POST is successful
-        if (f) {
-
+        if (true) {
+          console.log('success');
         }
         // If calling endpoint was successful but errors were encountered...
         else {
-
+          console.log('failure');
         }
       },
       // If calling endpoint fails completely...
