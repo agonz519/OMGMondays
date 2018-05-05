@@ -1,95 +1,75 @@
-// Dependencies
-// =============================================================
-var express = require("express");
-var bodyParser = require("body-parser");
-var path = require("path");
+const express = require("express");
+const bodyParser = require("body-parser");
+const path = require("path");
 
-// Sets up the Express App
-// =============================================================
-var app = express();
-var PORT = 3000;
+const app = express();
+const PORT = 3000;
 
-// Sets up the Express app to handle data parsing
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Star Wars Characters (DATA)
-// =============================================================
-var characters = [
+let reservations = [
   {
-    routeName: "yoda",
-    name: "Yoda",
-    role: "Jedi Master",
-    age: 900,
-    forcePoints: 2000
+    name: "Alex",
+    phonenumber: "555-567-4321",
+    email: "fake1@gmail.com",
+    uniqueid: 1,
   },
   {
-    routeName: "darthmaul",
-    name: "Darth Maul",
-    role: "Sith Lord",
-    age: 200,
-    forcePoints: 1200
+    name: "Thomas",
+    phonenumber: "555-567-4325",
+    email: "fake2@gmail.com",
+    uniqueid: 2,
   },
   {
-    routeName: "obiwankenobi",
-    name: "Obi Wan Kenobi",
-    role: "Jedi Master",
-    age: 55,
-    forcePoints: 1350
+    name: "Geoff",
+    phonenumber: "555-567-43231",
+    email: "fake3@gmail.com",
+    uniqueid: 3,
   }
 ];
 
-// Routes
-// =============================================================
-
 // Basic route that sends the user first to the AJAX Page
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "view.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.get("/add", function(req, res) {
-  res.sendFile(path.join(__dirname, "add.html"));
+app.get("/tables", function(req, res) {
+  res.sendFile(path.join(__dirname, "tables.html"));
 });
 
-// Displays all characters
-app.get("/api/characters", function(req, res) {
-  return res.json(characters);
+app.get("/reservations", function(req, res) {
+  res.sendFile(path.join(__dirname, "reservations.html"));
+});
+
+// Displays all reservations
+app.get("/api/reservations", function(req, res) {
+  return res.json(reservations);
 });
 
 // Displays a single character, or returns false
-app.get("/api/characters/:character", function(req, res) {
-  var chosen = req.params.character;
+app.get("/api/reservation/:table", function(req, res) {
+  let selected = req.params.table;
 
-  console.log(chosen);
+  console.log(selected);
 
-  for (var i = 0; i < characters.length; i++) {
-    if (chosen === characters[i].routeName) {
-      return res.json(characters[i]);
+  for (let i = 0; i < reservations.length; i++) {
+    if (selected === reservations[i].routeName) {
+      return res.json(reservations[i]);
     }
   }
-
   return res.json(false);
 });
 
-// Create New Characters - takes in JSON input
-app.post("/api/characters", function(req, res) {
-  // req.body hosts is equal to the JSON post sent from the user
-  // This works because of our body-parser middleware
-  var newcharacter = req.body;
-
-  // Using a RegEx Pattern to remove spaces from newCharacter
-  // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
-
-  console.log(newcharacter);
-
-  characters.push(newcharacter);
-
-  res.json(newcharacter);
+app.post("/api/create_reservation", async (req, res) => {
+  let reservation = req.body;
+  const { body: { name, phonenumber, email, uniqueid } }  = req;
+  newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
+  const update = await connection.push(newreservation);
+  console.log(update);
+  res.json(update);
 });
 
-// Starts the server to begin listening
-// =============================================================
 app.listen(PORT, function() {
   console.log("App listening on PORT " + PORT);
 });
