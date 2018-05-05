@@ -30,32 +30,28 @@ let reservations = [
 ];
 
 // Basic route that sends the user first to the AJAX Page
-app.get("/", function(req, res) {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.get("/tables", function(req, res) {
+app.get("/tables", (req, res) => {
   res.sendFile(path.join(__dirname, "tables.html"));
 });
 
-app.get("/reservations", function(req, res) {
+app.get("/reservations", (req, res) => {
   res.sendFile(path.join(__dirname, "reservations.html"));
 });
 
-// Displays all reservations
-app.get("/api/reservations", function(req, res) {
+app.get("/api/reservations", (req, res) => {
   return res.json(reservations);
 });
 
-// Displays a single character, or returns false
-app.get("/api/reservation/:table", function(req, res) {
+app.get("/api/reservation/:table", (req, res) => {
   let selected = req.params.table;
-
   console.log(selected);
-
-  for (let i = 0; i < reservations.length; i++) {
-    if (selected === reservations[i].routeName) {
-      return res.json(reservations[i]);
+  for (let reservation of reservations) {
+    if (selected === reservation.routeName) {
+      return res.json(reservation);
     }
   }
   return res.json(false);
@@ -70,6 +66,6 @@ app.post("/api/create_reservation", async (req, res) => {
   res.json(update);
 });
 
-app.listen(PORT, function() {
+app.listen(PORT, () => {
   console.log("App listening on PORT " + PORT);
 });
