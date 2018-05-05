@@ -5,6 +5,11 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
+let name;
+let phonenumber;
+let email;
+let uniquid;
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -29,7 +34,6 @@ let reservations = [
   }
 ];
 
-// Basic route that sends the user first to the AJAX Page
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -62,10 +66,10 @@ app.get("/api/reservation/:table", (req, res) => {
 });
 
 app.post("/api/create_reservation", async (req, res) => {
-  let reservation = req.body;
-  const { body: { name, phonenumber, email, uniqueid } }  = req;
+  const { name, phonenumber, email, uniqueid } = req.body;
   newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
-  const update = await connection.push(newreservation);
+  // const update = await connection.push(newreservation);
+  reservations.push(newreservation);
   console.log(update);
   res.json(update);
 });
