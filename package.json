@@ -1,0 +1,25 @@
+{
+  "name": "omgmondays",
+  "version": "1.0.0",
+  "description": "Restaurant app for reserving tables.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agonz519/OMGMondays.git"
+  },
+  "author": "The Table",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agonz519/OMGMondays/issues"
+  },
+  "homepage": "https://github.com/agonz519/OMGMondays#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mysql": "^2.15.0"
+  }
+}
